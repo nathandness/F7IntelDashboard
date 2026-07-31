@@ -216,7 +216,7 @@
 
 <header>
   <h1>Medtech Funding &amp; Regulatory Monitor</h1>
-  <span class="generated">Generated July 31, 2026 at 20:15 UTC</span>
+  <span class="generated">Generated July 31, 2026 at 20:36 UTC</span>
 </header>
 
 <div class="stats" id="stats"></div>
@@ -274,7 +274,7 @@
 <table id="results-table">
   <thead>
     <tr>
-      <th data-sort="event_date">Date</th>
+      <th data-sort="event_date_parsed">Date</th>
       <th data-sort="company">Company</th>
       <th data-sort="event_type">Type</th>
       <th data-sort="amount_parsed">Amount</th>
@@ -299,7 +299,7 @@ const BADGE_CLASS = {
   grant_incubator: "badge-grant", vc_pe_funding: "badge-vc",
 };
 
-let sortKey = "event_date";
+let sortKey = "event_date_parsed";
 let sortDir = -1;
 
 function renderStats(rows) {
@@ -355,7 +355,7 @@ function applyFilters() {
   let rows = DATA.filter(r => {
     if (search && !((r.company||"").toLowerCase().includes(search) || (r.summary||"").toLowerCase().includes(search))) return false;
     if (type && r.event_type_bucket !== type) return false;
-    if (therapy && r.therapy_area !== therapy) return false;
+    if (therapy && r.therapy_area && r.therapy_area !== therapy) return false;
     if (dateCutoff && (!r.event_date_parsed || r.event_date_parsed < dateCutoff)) return false;
     if (amountRange) {
       if (r.amount_parsed === null || r.amount_parsed === undefined) return false;
